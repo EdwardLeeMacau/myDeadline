@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deadspacito</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/cover.css">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/canvasjs.min.js"></script>
+    <script src="js/web3.min.js"></script>
+
+    <script>
+        function demo () {
+            var URL = "/demo/" + $("#contractAddress").val();
+
+            $.ajax({
+                url: URL,
+                type: "GET",
+                data: "",
+                dataType: "Text",
+                success: function(res, status, http) {
+                    if (res) {
+                        console.log(res);
+                        $("#txhash").val(res);
+                    }
+                }
+            })
+        }
+
+        function update () {
+            $.ajax({
+                url: "/update",
+                type: "GET",
+                data: "",
+                dataType: "Text",
+                success: function(res, status, http) {
+                    if (res) {
+                        var response = JSON.parse(res);
+                        $("#myBalance").val(response.myBalance + " ETHER");
+                        $("#targetBalance").val(response.targetBalance + " ETHER");
+                    }
+                }
+            })
+        }
+
+        function contract () {
+            var URL     = "/contractState/" + $("#contractAddress").val();
+
+            $.ajax({
+                url: URL,
+                type: "GET",
+                data: "",
+                dataType: "Text",
+                success: function(res, status, http) {
+                    if (res) {
+                        var response = JSON.parse(res);
+                        $("#txtlastword").val(response.lastword);
+                        $("#txtbalance").val(response.balance + " ETHER");
+                    };
+                }
+            })
+        }
+
+    </script>
+
+</head>
+<body data-gr-c-s-loaded="true">
+
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="container">
+
+            <div class="">
+                <div class="col-sm-12-middle">
+                    <div class="group row">
+                        <div class="col-sm-4">
+                            <img src='./img/old-man.png' width="200" height="200">
+                            <textarea id="myBalance" rows="1" readonly="true" class="middle" style="font-size: 20px"></textarea>
+                        </div>
+                        <div class="col-sm-4">
+                            <img src='./img/05.png' width="200" height="200">
+                            <textarea id="txtbalance" rows="1" readonly="true" class="middle" style="font-size: 20px"></textarea>
+                        </div>
+                        <div class="col-sm-4">
+                            <img src='./img/boy.png' width="200" height="200">
+                            <textarea id="targetBalance" rows="1" readonly="true" class="middle" style="font-size: 20px"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <h1 class="cover-heading" style="margin-top: 50px;">Contract</h1>
+                <form id="formremaining">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" style="font-size: 22px">Contract Address</label>
+                        <div class="col-sm-10">
+                        <textarea id="contractAddress" rows="1" class="form-control" placeholder="" style="font-size: 28px"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" style="font-size: 22px">Lastword</label>
+                        <div class="col-sm-10">
+                            <textarea id="txtlastword" rows="2" class="form-control" placeholder="" readonly="true" style="font-size: 28px"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" style="font-size: 22px">TxHash</label>
+                        <div class="col-sm-10">
+                            <textarea id="txhash" rows="1" class="form-control" placeholder="" readonly="true" style="font-size: 28px"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <button type="button" onclick="demo()" class="btn btn-primary">
+                                Demo!
+                            </button>
+                            <button type="button" onclick="contract()" class="btn btn-primary">
+                                findContract
+                            </button>
+                            <button type="button" onclick="update()" class="btn btn-primary">
+                                update
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+            </div>
+
+            <div id="showlastword" class="row" style="margin-top:50px; margin-bottom:50px;">
+            </div>
+
+            <div class="">
+                <div class="inner"><p>&copy; Deadspacito</p></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
